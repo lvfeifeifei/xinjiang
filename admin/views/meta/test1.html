@@ -1,0 +1,31 @@
+<div>
+  <div class="page-bar">
+    <ul class="page-breadcrumb">
+      <li>
+        <a href="index.html">元数据管理</a>
+        <i class="fa fa-circle"></i>
+      </li>
+      <li>
+        <span>元数据标准</span>
+      </li>
+    </ul>
+  </div>
+  <div class=“row”>
+    <div class="col-lg-3">
+      <h1>数据源端</h1>
+      <p ng-repeat="data in dataList">
+        <span>{{data.NAME}}</span>
+      </p>
+    </div>
+<!--
+    <div class="col-lg-4" ui-view="table">
+      <h1>数据表</h1>
+      <p>分页的表格</p>
+    </div>
+    <div class="col-lg-5" ui-view="col">
+            <h1>数据字段</h1>
+            <p>分页的字段</p>
+    </div>
+-->
+  </div>
+</div>

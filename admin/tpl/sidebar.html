@@ -1,0 +1,52 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+    <ul class="page-sidebar-menu"
+         data-keep-expanded="false"
+         data-auto-scroll="true"
+         data-slide-speed="300"
+         ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+
+        <li class="start nav-item">
+            <a  class="nav-link nav-toggle" href="#">
+                <i class="fa fa-cubes"></i>
+                <span class="title">数据源管理</span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="#/file_upload.html" ui-sref="datasource.monitor">
+                        <i class="fa fa-eye"></i>数据源端监控</span>
+                     </a>
+                </li>
+                <li>
+                    <a href="#/ui_bootstrap.html" ui-sref="datasource.list">
+                        <i class="fa fa-cube"></i>数据源端接入</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+        <li class="start nav-item">
+                <a  class="nav-link nav-toggle" href="#">
+                    <i class="fa fa-cubes"></i>
+                    <span class="title">元数据管理</span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#/file_upload.html" ui-sref="meta.standard">
+                            <i class="fa fa-eye"></i>元数据标准</span>
+                         </a>
+                    </li>
+
+
+                </ul>
+            </li>
+
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>
