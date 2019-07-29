@@ -1,0 +1,70 @@
+<div class="page-bar">
+  <breadcrumbs></breadcrumbs>
+</div>
+<h4>{{table.TABLE_NAME}}</h4>
+<h5>表信息</h5>
+<div>
+  <p>TABLE_NAME: {{table.TABLE_NAME}}</p>
+  <p>DBSOURCE: {{sourceName}}</p>
+  <p>CDATE: {{table.CDATE | date: 'yyyy-MM-dd HH:mm'}}</p>
+</div>
+<h5>字段信息</h5>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_col" ng-click="save({})">
+  新增字段
+</button>
+<div ng-repeat="item in cols track by $index" ng-if="item.DEL_FLAG=='0'"> <!-- 已删除的不显示 -->
+  <p>{{$index+1}}</p>
+  <p>FIELD_NAME: {{item.FIELD_NAME}}</p>
+  <p>FIELD_NOTE: {{item.FIELD_NOTE}}</p>
+  <p>FIELD_TYPE: {{item.FIELD_TYPE}}</p>
+  <p>FIELD_LENGTH: {{item.FIELD_LENGTH}}</p>
+  <p>STATUS: {{item.STATUS=='0'?'未发布':'已发布'}}</p>
+  <p>CDATE: {{item.CDATE | date: 'yyyy-MM-dd HH:mm'}}</p>
+  <p>
+    <a ng-if="item.STATUS=='0'" ng-click="publish(item.ID, $index)">发布</a>
+    <a ng-click="remove(item.ID, $index)"> 删除</a>
+  </p>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_col" ng-click="save(item, $index)">
+    修改字段
+  </button>
+</div>
+
+<div class="modal fade" id="modal_col">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{col.ID?'修改':'新增'}}字段</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">FIELD_NAME</label>
+            <input type="text" class="form-control" id="name" ng-model="col.FIELD_NAME">
+          </div>
+          <div class="form-group">
+            <label for="note">FIELD_NOTE</label>
+            <input type="text" class="form-control" id="note" ng-model="col.FIELD_NOTE">
+          </div>
+          <div class="form-group">
+            <label for="type">FIELD_TYPE</label>
+            <input type="text" class="form-control" id="type" ng-model="col.FIELD_TYPE">
+          </div>
+          <div class="form-group">
+            <label for="length">FIELD_LENGTH</label>
+            <input type="number" class="form-control" id="length" ng-model="col.FIELD_LENGTH">
+          </div>
+          <div class="form-group">
+            <label for="remarks">remarks</label>
+            <input type="text" class="form-control" id="remarks" ng-model="col.remarks">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn green" ng-click="saveClick()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

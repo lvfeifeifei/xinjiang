@@ -1,16 +1,8 @@
-<div>
+<div class="page-bar">
+  <breadcrumbs></breadcrumbs>
+</div>
 
-  <div class="page-bar">
-    <ul class="page-breadcrumb">
-      <li>
-        <a href="index.html">元数据管理</a>
-        <i class="fa fa-circle"></i>
-      </li>
-      <li>
-        <span>元数据标准</span>
-      </li>
-    </ul>
-  </div>
+<div>
   <div class=“row”>
     <h1>数据源端</h1>
     <div class="table-scrollable">
@@ -42,8 +34,8 @@
         </tr>
         </thead>
         <tbody id="dataTable">
-        <tr role="row" class="odd" ng-repeat="data in dataList">
-          <td>1</td>
+        <tr role="row" class="odd" ng-repeat="item in data track by $index">
+          <td>{{ $index + 1 }}</td>
           <td>
             <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
               <input type="checkbox" class="checkboxes" value="1">
@@ -51,9 +43,9 @@
             </label>
           </td>
           <td class="sorting_1">
-            <span ng-click="routePath(data.ID)">{{data.NAME}}</span>
+            <a ui-sref="meta.standard.table({sid:item.ID, sname:item.NAME})">{{item.NAME}}</a>
           </td>
-          <td> {{data.ID}} </td>
+          <td> {{item.ID}} </td>
         </tr>
         </tbody>
       </table>

@@ -1,0 +1,8 @@
+<ul class="page-breadcrumb">
+  <li ng-repeat="step in steps track by $index" >
+    <a ng-if="!step.abstract && !$last" ui-sref="{{step.link}}">{{step.label}}</a>
+    <span ng-if="step.abstract || $last">{{step.label}}</span>
+    <i ng-hide="$last" class="fa fa-angle-right"></i>
+  </li>
+</ul>
+

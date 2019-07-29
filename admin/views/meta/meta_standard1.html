@@ -1,0 +1,208 @@
+<div class="page-bar">
+  <breadcrumbs></breadcrumbs>
+</div>
+
+
+<div class="row">
+  <div class="col-md-3 col-lg-2">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-social-dribbble font-green"></i>
+            <span class="caption-subject font-green bold uppercase"> 数据源</span>
+        </div>
+        <div class="actions"></div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-scrollable">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th> # </th>
+                <th> 数据源 </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in sources track by $index" ng-click="queryTable(item)">
+                <td> {{ $index + 1 }} </td>
+                <td> {{ item.NAME }} </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+
+
+  <div class="col-md-5 col-lg-4">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+          <div class="caption">
+              <i class="icon-social-dribbble font-blue"></i>
+              <span class="caption-subject font-blue bold uppercase"> 表<span ng-show="source.NAME">（数据源：{{source.NAME}}）</span></span>
+          </div>
+          <div class="actions"></div>
+      </div>
+      <div class="portlet-body">
+          <p ng-hide="tables!=null && tables.length>0" >暂无记录</p>
+          <div class="table-scrollable" ng-show="tables!=null && tables.length>0">
+            <table class="table table-hover" >
+              <thead>
+                <tr>
+                  <th> # </th>
+                  <th> 表 </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in tables track by $index">
+                  <td> {{ $index + 1 }} </td>
+                  <td> {{ item.TABLE_NAME }} </td>
+                  <td class="text-nowrap">
+                    <a ng-click="queryTableCol(item)" class="btn blue btn-sm btn-outline sbold uppercase">详情</a>
+                    <a type="button" class="btn btn-outline sbold btn-sm purple" data-toggle="modal" data-target="#modal_table"
+                      ng-click="updateTable(item, $index)">修改</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+  </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+
+  <div class="col-md-4 col-lg-6">
+    <!-- BEGIN SAMPLE TABLE PORTLET-->
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-social-dribbble font-purple"></i>
+                <span class="caption-subject font-purple bold uppercase"> 表结构<span ng-show="table.TABLE_NAME">（表：{{table.TABLE_NAME}}）</span></span>
+            </div>
+            <div class="actions"></div>
+        </div>
+        <div class="portlet-body">
+          <p ng-hide="cols!=null && cols.length>0" >暂无记录</p>
+          <div class="table-scrollable" ng-show="cols!=null && cols.length>0">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th> # </th>
+                    <th> 字段 </th>
+                    <th> 名称 </th>
+                    <th> 类型 </th>
+                    <th> 长度 </th>
+                    <th> 是否发布 </th>
+                    <!-- <th> 创建时间 </th> -->
+                    <th><a type="button" class="btn btn-outline sbold btn-sm green" data-toggle="modal" data-target="#modal_col"
+                      ng-click="saveCol({})">新增</a>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in cols track by $index">
+                    <td> {{ $index + 1 }} </td>
+                    <td> {{ item.FIELD_NAME }} </td>
+                    <td> {{ item.FIELD_NOTE }} </td>
+                    <td> {{ item.FIELD_TYPE }} </td>
+                    <td> {{ item.FIELD_LENGTH }} </td>
+                    <td>
+                      <span ng-hide="item.STATUS=='0'" class="label label-sm label-success">已发布</span>
+                      <span ng-show="item.STATUS=='0'" class="label label-sm label-default">未发布</span>
+                    </td>
+                    <!-- <td> {{ item.CDATE | date: 'yyyy-MM-dd HH:mm' }} </td> -->
+                    <td class="text-nowrap">
+                      <a type="button" class="btn btn-outline sbold btn-sm purple" data-toggle="modal" data-target="#modal_col"
+                        ng-click="saveCol(item, $index)">修改</a>
+                      <a ng-if="item.STATUS=='0'" class="btn blue btn-sm btn-outline sbold uppercase"
+                        ng-click="publishCol(item.ID, $index)">发布</a>
+                      <a class="btn red btn-sm btn-outline sbold uppercase" ng-click="removeCol(item.ID, $index)"> 删除</a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+    <!-- END SAMPLE TABLE PORTLET-->
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="modal_table">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">修改表</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">表名称</label>
+            <input type="text" class="form-control" id="name" ng-model="table.TABLE_NAME">
+          </div>
+          <div class="form-group">
+            <label for="note">注释</label>
+            <input type="text" class="form-control" id="note" ng-model="table.note">
+          </div>
+        </form>
+      </div>
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn green" ng-click="updateTableClick()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modal_col">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{col.ID?'修改':'新增'}}字段（表：{{table.TABLE_NAME}}）</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="cname">字段</label>
+            <input type="text" class="form-control" id="cname" ng-model="col.FIELD_NAME">
+          </div>
+          <div class="form-group">
+            <label for="cnote">名称</label>
+            <input type="text" class="form-control" id="cnote" ng-model="col.FIELD_NOTE">
+          </div>
+          <div class="form-group">
+            <label for="type">类型</label>
+            <input type="text" class="form-control" id="type" ng-model="col.FIELD_TYPE">
+          </div>
+          <div class="form-group">
+            <label for="length">长度</label>
+            <input type="number" class="form-control" id="length" ng-model="col.FIELD_LENGTH">
+          </div>
+          <div class="form-group">
+            <label for="remarks">备注</label>
+            <input type="text" class="form-control" id="remarks" ng-model="col.remarks">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn dark btn-outline" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn green" ng-click="saveColClick()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
